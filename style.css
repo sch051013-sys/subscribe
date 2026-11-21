@@ -1,0 +1,209 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root {
+  --primary: #3B82F6;
+  --primary-light: #EFF6FF;
+  --primary-dark: #1D4ED8;
+  --bg-app: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text-main: #0F172A;
+  --text-sub: #64748B;
+  --text-muted: #94A3B8;
+  --border-light: #E2E8F0;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  --success: #10B981;
+}
+
+* {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #F1F5F9;
+  color: var(--text-main);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* 모바일 전용 컨테이너 프레임 */
+.mobile-frame {
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 640px) {
+  body {
+    padding: 20px 0;
+  }
+  .mobile-frame {
+    height: 860px;
+    max-height: 94vh;
+    min-height: 620px;
+    border-radius: 36px;
+    margin: auto;
+    border: 6px solid #FFFFFF;
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  }
+}
+
+/* 각 화면(Screen) - 부모 높이를 벗어나지 않도록 min-height: 0 */
+.screen {
+  flex: 1 1 0%;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.screen.active {
+  display: flex !important;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 핵심 스크롤 영역: 마우스 휠 및 터치 제스처 원활 작동 */
+.screen-scroll-body {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* 깔끔하고 귀여운 미니멀 슬림 스크롤바 */
+.screen-scroll-body::-webkit-scrollbar {
+  width: 5px;
+}
+.screen-scroll-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.screen-scroll-body::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+.screen-scroll-body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.6);
+}
+
+/* 영수증 톱니바퀴 모양 지그재그 하단 (Receipt Edge) */
+.zigzag-bottom {
+  position: relative;
+}
+.zigzag-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 10px;
+  background: linear-gradient(135deg, #ffffff 5px, transparent 0), linear-gradient(-135deg, #ffffff 5px, transparent 0);
+  background-size: 14px 10px;
+}
+
+/* 커스텀 슬라이더 스타일 */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  height: 8px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #3B82F6;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+  transition: transform 0.15s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* 캘린더 그리드 스타일 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-day-cell {
+  aspect-ratio: 1 / 1.15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.calendar-day-cell:hover {
+  background-color: #F8FAFC;
+}
+
+.calendar-day-cell.is-selected {
+  background-color: #EFF6FF;
+  border: 1.5px solid #3B82F6;
+}
+
+.calendar-day-cell.is-today .day-number {
+  background-color: #3B82F6;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.calendar-day-cell.other-month {
+  opacity: 0.25;
+}
+
+/* 펄스 애니메이션 (무료체험 종료 임박 배지) */
+@keyframes trial-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.03); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+
+.pulse-danger {
+  animation: trial-pulse 2s infinite ease-in-out;
+}
